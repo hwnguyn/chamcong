@@ -1,142 +1,480 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OPIUOI</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 2s infinite ease-in-out;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.2; }
-    }
-    .container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .phrase {
-      position: absolute;
-      font-size: 20px;
-      font-weight: bold;
-      color: #ffccd5;
-      text-shadow: 0 0 10px rgba(255, 192, 203, 0.8);
-      animation: fall linear forwards;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-    @keyframes fall {
-      0% {
-        transform: translateY(-50px);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trang Chấm Công</title>
+    <style>
+        :root {
+            --primary-color: #800000;
+            --primary-light: #a04040;
+            --secondary-color: #f8d7da;
+            --text-color: #333;
+            --border-color: #ddd;
+            --bg-color: #fff;
+            --header-bg: #f8f9fa;
+            --success-color: #28a745;
+            --weekend-color: #fff0f0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f5f5;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        h1 {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .description {
+            color: #666;
+            font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        input[type="date"] {
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+        input[type="date"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.2);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: var(--primary-light);
+        }
+        button.secondary {
+            background-color: #6c757d;
+        }
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr.weekend {
+            background-color: var(--weekend-color);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.2);
+        }
+        .cong-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .summary {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+        .summary h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .notes-container {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        .notes-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .note-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .note-item:last-child {
+            border-bottom: none;
+        }
+        .note-date {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .help-text {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-top: 2px solid var(--primary-color);
+            margin-top: auto;
+            background-color: #fff;
+        }
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            input[type="date"] {
+                width: 100%;
+            }
+            table {
+                font-size: 14px;
+            }
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .save-confirmation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeOut 2s ease-in 1s forwards;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
-  <div class="container" id="container"></div>
-
-  <script>
-    const phrases = [
-      "Cảm ơn vì đã đợi",
-      "Ăn nhiều lên cho mau lớn nhé",
-      "Thơm gió môi em một cái",
-      "Tập đi ngủ sớm đi",
-      "Ngủ muộn hại sức khỏe lắm",
-      "Mình ộp mệt là được rồi",
-      "ộp luôn ở đây",
-      "Phạm Thu Hằng rất ngoan",
-      "Bảo bối à, tôi tự hào về em",
-      "ộp sẽ luôn ở đây",
-      "ộp iu đâyyyy",
-      "Mèo iu đâu ồi",
-      "Chị Phạm Thu Hằng mãi đỉnh",
-      "Không ai tự hào về chị, thì nay có em rồi",
-      "Đừng bỏ cuộc",
-      "new york city là đồ cờ hó",
-      "Em sẽ bảo vệ chị",
-      "Chị bảo kê đàn em này nhé",
-      "Tiểu bảo bốiiii",
-      "Mèo ơiiiii",
-      "Mèo ơi ộp đây",
-      "Có gì kể ộp nghe điiii",
-      "Chị thích là được",
-      "Vì chị xứng đáng",
-      "Mèoooo",
-      "Em ở đây nè",
-      "Ôm cái nè",
-      "Xoa xoa cái bụng cho đỡ đau nè",
-      "Ngủ sớm đi bảo bối",
-      "Tôi nhắc em"
-    ];
-
-    const container = document.getElementById('container');
-    let lastPositions = [];
-
-    function isOverlapping(x, y) {
-      return lastPositions.some(pos => Math.abs(pos.x - x) < 150 && Math.abs(pos.y - y) < 40);
-    }
-
-    function createPhrase() {
-      let x, y;
-      let attempts = 0;
-      do {
-        x = Math.random() * 90;
-        y = -10;
-        attempts++;
-      } while (isOverlapping(x, y) && attempts < 10);
-      lastPositions.push({x, y});
-
-      const phrase = document.createElement('div');
-      phrase.className = 'phrase';
-      phrase.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-      phrase.style.left = x + 'vw';
-      phrase.style.top = y + 'vh';
-      phrase.style.animationDuration = (5 + Math.random() * 5) + 's';
-      container.appendChild(phrase);
-
-      setTimeout(() => {
-        phrase.remove();
-        lastPositions = lastPositions.filter(pos => pos.x !== x || pos.y !== y);
-      }, 10000);
-    }
-
-    function createStars(count) {
-      for (let i = 0; i < count; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        const size = Math.random() * 3 + 1 + 'px';
-        star.style.width = size;
-        star.style.height = size;
-        star.style.left = Math.random() * 100 + 'vw';
-        star.style.top = Math.random() * 100 + 'vh';
-        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        document.body.appendChild(star);
-      }
-    }
-
-    createStars(100);
-    setInterval(createPhrase, 800);
-  </script>
+    <div class="container">
+        <header>
+            <h1>Em Yêu Tiền và Tiền Đến Với Em</h1>
+            <p class="description">Hướng dẫn ký hiệu ca : S : Sáng, C : Chiều, T : Tối, SC : Sáng Chiều, ST : Sáng Tối, SCT : Sáng Chiều Tối.</p>
+        </header>
+        <div class="controls">
+            <div class="control-group">
+                <label for="start-date">Ngày bắt đầu:</label>
+                <input type="date" id="start-date" />
+            </div>
+            <button id="create-btn">Tạo bảng chấm công</button>
+            <button id="clear-btn" class="secondary">Xóa dữ liệu</button>
+        </div>
+        <div id="table-container"></div>
+        <div id="summary-container" class="summary"></div>
+        <div id="notes-container" class="notes-container"></div>
+    </div>
+    <footer>Tiền ơi tiền ở đừng đi</footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const caMapping = {
+                'S': 0.5,
+                'SC': 1,
+                'SCT': 1.5,
+                'ST': 1,
+                'CT': 1,
+                'C': 0.5,
+                'T': 0.5,
+                'Nghỉ': null,
+                '': null
+            };
+            let currentMonthData = {};
+            let dailyCong = {};
+            const startDateInput = document.getElementById('start-date');
+            const createBtn = document.getElementById('create-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const tableContainer = document.getElementById('table-container');
+            const summaryContainer = document.getElementById('summary-container');
+            const notesContainer = document.getElementById('notes-container');
+            const today = new Date();
+            startDateInput.value = formatDateISO(today);
+            loadData();
+            createBtn.addEventListener('click', function () {
+                const startDate = new Date(startDateInput.value);
+                if (isNaN(startDate.getTime())) {
+                    alert('Vui lòng chọn ngày bắt đầu hợp lệ');
+                    return;
+                }
+                createTableForMonth(startDate);
+                updateSummary();
+                updateNotesSummary();
+            });
+            clearBtn.addEventListener('click', function () {
+                if (confirm('Bạn có chắc chắn muốn xóa toàn bộ dữ liệu?')) {
+                    localStorage.clear();
+                    tableContainer.innerHTML = '';
+                    summaryContainer.innerHTML = '';
+                    notesContainer.innerHTML = '';
+                    currentMonthData = {};
+                    dailyCong = {};
+                    showSaveConfirmation('Đã xóa toàn bộ dữ liệu');
+                }
+            });
+            function createTableForMonth(startDate) {
+                const year = startDate.getFullYear();
+                const month = startDate.getMonth();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const monthKey = `${year}-${month + 1}`;
+                if (!currentMonthData[monthKey]) {
+                    currentMonthData[monthKey] = {};
+                }
+                let tableHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày/tháng/năm</th>
+                                <th>Thứ</th>
+                                <th>Ca</th>
+                                <th>Công</th>
+                                <th>Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                dailyCong[monthKey] = {};
+                const startDay = startDate.getDate();
+                for (let day = startDay; day <= daysInMonth; day++) {
+                    const date = new Date(year, month, day);
+                    const dateStr = formatDateISO(date);
+                    const dateDisplay = formatDateVN(date);
+                    const thu = getThuVN(date);
+                    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+                    if (!currentMonthData[monthKey][dateStr]) {
+                        currentMonthData[monthKey][dateStr] = { ca: '', ghiChu: '' };
+                    }
+                    const caValue = currentMonthData[monthKey][dateStr].ca;
+                    const ghiChuValue = currentMonthData[monthKey][dateStr].ghiChu;
+                    const congValue = caMapping[caValue] !== undefined ? caMapping[caValue] : null;
+                    dailyCong[monthKey][dateStr] = congValue !== null ? congValue : 0;
+                    tableHTML += `
+                        <tr class="${isWeekend ? 'weekend' : ''}">
+                            <td>${dateDisplay}</td>
+                            <td>${thu}</td>
+                            <td>
+                                <input type="text" 
+                                       class="ca-input" 
+                                       data-date="${dateStr}" 
+                                       data-month="${monthKey}"
+                                       value="${caValue}"
+                                       placeholder="">
+                            </td>
+                            <td class="cong-value">${congValue !== null ? congValue : ''}</td>
+                            <td>
+                                <input type="text" 
+                                       class="note-input" 
+                                       data-date="${dateStr}" 
+                                       data-month="${monthKey}"
+                                       value="${ghiChuValue}"
+                                       placeholder="">
+                            </td>
+                        </tr>
+                    `;
+                }
+                tableHTML += '</tbody></table>';
+                tableContainer.innerHTML = tableHTML;
+                document.querySelectorAll('.ca-input').forEach(input => {
+                    input.addEventListener('input', handleCaInput);
+                    input.addEventListener('focus', e => e.target.select());
+                });
+                document.querySelectorAll('.note-input').forEach(input => {
+                    input.addEventListener('input', handleNoteInput);
+                });
+            }
+            function handleCaInput(e) {
+                const input = e.target;
+                const dateStr = input.getAttribute('data-date');
+                const monthKey = input.getAttribute('data-month');
+                const caValue = input.value.trim();
+                if (!currentMonthData[monthKey][dateStr]) {
+                    currentMonthData[monthKey][dateStr] = { ca: '', ghiChu: '' };
+                }
+                currentMonthData[monthKey][dateStr].ca = caValue;
+                const congValue = caMapping[caValue] !== undefined ? caMapping[caValue] : null;
+                const congCell = input.parentElement.nextElementSibling;
+                congCell.textContent = congValue !== null ? congValue : '';
+                dailyCong[monthKey][dateStr] = congValue !== null ? congValue : 0;
+                updateSummary();
+                saveData();
+                showSaveConfirmation('Đã lưu dữ liệu');
+            }
+            function handleNoteInput(e) {
+                const input = e.target;
+                const dateStr = input.getAttribute('data-date');
+                const monthKey = input.getAttribute('data-month');
+                const ghiChuValue = input.value;
+                if (!currentMonthData[monthKey][dateStr]) {
+                    currentMonthData[monthKey][dateStr] = { ca: '', ghiChu: '' };
+                }
+                currentMonthData[monthKey][dateStr].ghiChu = ghiChuValue;
+                saveData();
+                showSaveConfirmation('Đã lưu dữ liệu');
+                updateNotesSummary();
+            }
+            function updateSummary() {
+                const startDate = new Date(startDateInput.value);
+                if (isNaN(startDate.getTime())) return;
+                const year = startDate.getFullYear();
+                const month = startDate.getMonth();
+                const monthKey = `${year}-${month + 1}`;
+                if (!dailyCong[monthKey]) return;
+                let totalCong = 0;
+                for (const date in dailyCong[monthKey]) {
+                    totalCong += dailyCong[monthKey][date];
+                }
+                summaryContainer.innerHTML = `
+                    <h3>Tổng hợp công tháng ${month + 1}/${year}</h3>
+                    <p>Tổng số công: <strong>${totalCong.toFixed(1)}</strong></p>
+                `;
+            }
+            function updateNotesSummary() {
+                const startDate = new Date(startDateInput.value);
+                if (isNaN(startDate.getTime())) return;
+                const year = startDate.getFullYear();
+                const month = startDate.getMonth();
+                const monthKey = `${year}-${month + 1}`;
+                if (!currentMonthData[monthKey]) return;
+                let notesHTML = '<h3>Tổng hợp ghi chú</h3>';
+                let hasNotes = false;
+                for (const dateStr in currentMonthData[monthKey]) {
+                    const ghiChu = currentMonthData[monthKey][dateStr].ghiChu;
+                    if (ghiChu && ghiChu.trim() !== '') {
+                        hasNotes = true;
+                        const date = new Date(dateStr);
+                        notesHTML += `
+                            <div class="note-item">
+                                <span class="note-date">${formatDateVN(date)}:</span> ${ghiChu}
+                            </div>
+                        `;
+                    }
+                }
+                if (!hasNotes) {
+                    notesHTML += '<p>Chưa có ghi chú nào</p>';
+                }
+                notesContainer.innerHTML = notesHTML;
+            }
+            function saveData() {
+                localStorage.setItem('chamcongData', JSON.stringify(currentMonthData));
+            }
+            function loadData() {
+                const savedData = localStorage.getItem('chamcongData');
+                if (savedData) {
+                    currentMonthData = JSON.parse(savedData);
+                    const today = new Date();
+                    const monthKey = `${today.getFullYear()}-${today.getMonth() + 1}`;
+                    if (currentMonthData[monthKey]) {
+                        startDateInput.value = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-01`;
+                        createTableForMonth(today);
+                        updateSummary();
+                        updateNotesSummary();
+                    }
+                }
+            }
+            function showSaveConfirmation(message) {
+                const confirmation = document.createElement('div');
+                confirmation.className = 'save-confirmation';
+                confirmation.textContent = message;
+                document.body.appendChild(confirmation);
+                setTimeout(() => {
+                    document.body.removeChild(confirmation);
+                }, 3000);
+            }
+            function formatDateISO(date) {
+                const yyyy = date.getFullYear();
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const dd = String(date.getDate()).padStart(2, '0');
+                return `${yyyy}-${mm}-${dd}`;
+            }
+            function formatDateVN(date) {
+                const dd = String(date.getDate()).padStart(2, '0');
+                const mm = String(date.getMonth() + 1).padStart(2, '0');
+                const yyyy = date.getFullYear();
+                return `${dd}/${mm}/${yyyy}`;
+            }
+            function getThuVN(date) {
+                const thu = ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'];
+                return thu[date.getDay()];
+            }
+        });
+    </script>
 </body>
 </html>
